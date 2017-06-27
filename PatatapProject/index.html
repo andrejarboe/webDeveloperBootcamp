@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+  <title>Circles</title>
+
+  <!-- paper.js -->
+  <script type="text/javascript" src="paper-full.js"></script>
+  <!-- howler.js -->
+  <script type="text/javascript" src="howler.js" charset="utf-8"></script>
+
+  <link rel="stylesheet" href="circles.css">
+
+
+
+  <!-- Define inlined PaperScript associate it with myCanvas -->
+  <script type="text/paperscript" canvas="myCanvas">
+
+    var sound = new Howl({
+      src: ['sound/clay.mp3']
+    });
+
+
+    var circles = [];
+
+    function onKeyDown(event){
+      sound.play();
+      var maxPoint = new Point(view.size.width, view.size.height);
+      var randomPoint = Point.random();
+      var point = maxPoint * randomPoint;
+      var newCircle = new Path.Circle(point,500);
+
+      newCircle.fillColor = "blue";
+  	  circles.push(newCircle);
+    }
+
+    function onFrame(event) {
+      for (var i = 0; i < circles.length; i++) {
+        console.log(circles[i]);
+        // Each frame, change the fill color of the path slightly by
+        // adding 1 to its hue:
+        circles[i].fillColor.hue += 1;
+        //fadeout circle
+        circles[i].scale(.9);
+      }
+
+    }
+
+  </script>
+</head>
+<body>
+  <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
